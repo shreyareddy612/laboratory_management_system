@@ -30,7 +30,7 @@ const AboutUs = () => {
                 </div>
                 <div className='flex flex-col items-center w-full md:w-1/2'>
                     <article className='w-2/3'>
-                        <h2 className='font-bold text-md text-2xl'>Why we are the best</h2>
+                        <h2 className='font-bold text-md text-2xl'>Why we are the best?</h2>
                         <hr></hr>
                         <p className='italic'>
                             We have modern equipments such as MRI machines, PCR machines, CT- Scanner, Cell Counter, Clinical Laboratory Incubator, Chromatography, Microscopes, Cryostat, and many more. <br></br>

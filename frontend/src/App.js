@@ -3,7 +3,6 @@ import './css/styles.css';
 import {
     createBrowserRouter,
     RouterProvider,
-    Route,
     Outlet
   } from "react-router-dom";
   
@@ -17,9 +16,12 @@ import {
   import Results from './pages/Results';
   import LabReport from './pages/LabReport';
   import Admin from './pages/Admin';
+  import StaffRegister from './pages/StaffRegister';
+  import StaffLogin from './pages/StaffLogin';
 
 //   COMPONENTS
   import NavBar from './components/NavBar';
+import Staff from './pages/Staff';
 
   
   const Layout = () => {
@@ -71,6 +73,18 @@ import {
         {
             path: "/admin",
             element: <Admin/>
+        },
+        {
+          path: "/register-staff",
+          element: <StaffRegister/>
+        },
+        {
+          path: "/login-staff",
+          element: <StaffLogin/>
+        },
+        {
+          path: "/staff",
+          element: <Staff/>
         }
       ]
     }
@@ -87,5 +101,3 @@ import {
   }
   
   export default App;
-  
-
