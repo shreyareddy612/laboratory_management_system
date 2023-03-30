@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
 
@@ -28,7 +28,7 @@ const NavBar = () => {
                     <div className="block py-2 px-4 rounded hover:bg-green-700"><Link to="/about-us">About Us</Link></div>
                     <div className="block py-2 px-4 rounded hover:bg-green-700"><Link to="/contact-us">Contact Us</Link></div>
                     <div className="ml-4 py-2 px-2 rounded hover:bg-green-700"><Link to="/admin">Admin</Link></div>
-                    <div className="block py-2 px-4 rounded hover:bg-green-700"><Link to="/register">Register</Link></div>
+                    <div className="ml-4 py-2 px-2 rounded hover:bg-green-700"><Link to="/register">Register</Link></div>
                 </div>
             </header>
         </div>

@@ -8,13 +8,6 @@ const Results = () => {
                 <div className='w-full border mr-3 md:w-1/2'>
                     <h1 className="text-center text-green-700 text-2xl">Waiting</h1>
 
-                    {/* SEARCH BOX */}
-                    {/* <form className='flex flex-row' action="">
-                        <input className='p-2' type="text" placeholder='Patient Name' name='patientname'/>
-
-                        <input className='bg-green-700 p-2 text-white' type="button" value="Search" />
-                    </form> */}
-
                     {/* LIST/ARRAY OF PENDING TESTS */}
                     <div className='flex flex-col justify-center border items-center p-2 mt-3'>
                         {/* START SINGLE TEST CARD */}
