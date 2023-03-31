@@ -12,12 +12,13 @@ const hashPassword = (password, rounds) => {
 // register user
 module.exports.registerUser = async (req, res) => {
     try {
-        const hashed = hashPassword(req.body.password, 4);
+        const hashed = hashPassword(req.body.password, 10);
         console.log(hashed);
         const newStudent = await Users.create({
             full_name: req.body.full_name,
             email: req.body.email,
             phone: req.body.phone,
+            designation: req.body.designation,
             password: hashed
         });
         res.send({ newStudent });
@@ -35,7 +36,7 @@ module.exports.loginUser = async (req, res) => {
 
     // If the user does not exist, return an error
     if (!user) {
-      return res.status(401).json({ error: 'Invalid email or password' });
+      return res.status(401).json({ err: 'Wrong Email' });
     }
 
     // Check if the password is correct
@@ -43,12 +44,23 @@ module.exports.loginUser = async (req, res) => {
 
     // If the password is incorrect, return an error
     if (!isMatch) {
-      return res.status(401).json({ error: 'Invalid email or password' });
+      return res.status(401).json({ err: 'Wrong email or password' });
     }
+
+    res.status(200).json({
+      message: "Login Successful",
+      user,
+    })
+    // If the email and password match, generate a JWT
+    const token = jwt.sign({ _id: staff._id }, process.env.JWT_SECRET);
+
+    // Save the JWT in a cookie and return a success message
+    res.cookie('jwt', token, { httpOnly: true });
+    res.json({ message: 'Logged in successfully' });
     
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ err: 'Server error' });
   }
 };
 
@@ -71,16 +83,15 @@ module.exports.getUsers = async (req, res) => {
     }
 };
 
-
 // get user by id
-// router.get('/:id', async (req, res) => {
-//     try {
-//         const user = await Users.findById(req.params.id);
-//         res.send({ user });
-//     } catch (error) {
-//         res.status(404).send({ message: `User ${id} is not found` });
-//     }
-// });
+router.get('/:id', async (req, res) => {
+    try {
+        const user = await Users.findById(req.params.id);
+        res.send({ user });
+    } catch (error) {
+        res.status(404).send({ message: `User ${id} is not found` });
+    }
+});
 
 
 

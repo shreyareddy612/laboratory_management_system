@@ -8,7 +8,7 @@ const Login = () => {
         email: "",
         password: ""
     });
-    const [error, setError] = useState(null);
+    const [err, setError] = useState(null);
     const navigate = useNavigate();
 
     const handleFormChange = (event) => {
@@ -30,9 +30,8 @@ const Login = () => {
             };
             const response = await axios.post('/api/user/loginUser', formData, options);
             navigate("/test-booking");
-        } catch (error) {
-            setError(error.response.data);
-            // console.error(error);
+        } catch (err) {
+            setError(err.response.data);
         }
     };
     return (

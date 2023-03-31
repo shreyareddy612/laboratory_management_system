@@ -7,6 +7,7 @@ const Register = () => {
         full_name: "",
         email: "",
         phone: "",
+        designation: "",
         password: ""
     });
 
@@ -47,6 +48,12 @@ const Register = () => {
                 <input className="border-b-2 border-gray-400 w-4/5 p-2 mb-4 focus:outline-none focus:border-green-700" required type="email" placeholder="Email" name='email' onChange={handleFormChange} />
 
                 <input className="border-b-2 border-gray-400 w-4/5 p-2 mb-4 focus:outline-none focus:border-green-700" required type="text" placeholder="Phone" name='phone' onChange={handleFormChange} />
+
+                <select className="block appearance-none w-4/5 bg-white border border-gray-200 text-gray-700 mb-4 p-2 leading-tight focus:outline-none focus:bg-white focus:border-green-700" required value={formData.designation} name='designation' onChange={handleFormChange}>
+                    <option value="">--Choose Designation--</option>
+                    <option value="patient">Patient</option>
+                    <option value="technician">Staff</option>
+                </select>
 
                 <input className="border-b-2 border-gray-400 w-4/5 p-2 mb-4 focus:outline-none focus:border-green-700" required type="password" placeholder="Password" name='password' onChange={handleFormChange} />
 
