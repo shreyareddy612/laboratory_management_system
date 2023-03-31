@@ -25,13 +25,24 @@ const Login = () => {
             const options = {
                 headers: {
                     'Content-Type': 'application/json',
-                },
-                
+                },                
             };
             const response = await axios.post('/api/user/loginUser', formData, options);
-            navigate("/test-booking");
+            // get user id
+            const id = response.data.user._id;
+
+            const userResponse = await axios.get("/api/user/getUserById/" + id);
+
+            const isPatient = userResponse.data.user.designation;
+
+            if (isPatient === "patient") {
+                navigate("/test-booking");
+            } else {
+                navigate(`/staff/${id}`);
+            }
         } catch (err) {
-            setError(err.response.data);
+            // setError(err.response.data);
+            console.log(err);
         }
     };
     return (

@@ -5,8 +5,6 @@ import axios from 'axios';
 const TestBooking = () => {
     const [formData, setFormData] = useState({
         disease: "",
-        date_for_test: "",
-        time_for_test: "",
         user_email: ""
     });
 
@@ -19,6 +17,7 @@ const TestBooking = () => {
         }));
     };
 
+    
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -28,13 +27,12 @@ const TestBooking = () => {
                     'Content-Type': 'application/json',
                 },
             };
-            const response = await axios.post('/api/bktest/bookTest', formData, options);
-            navigate("/");
+            const response = await axios.post('/api/bktest/createBkTest', formData, options);
+            navigate("/report");
         } catch (error) {
             console.error(error);
         }
     };
-
 
     return (
         <div className='flex flex-col justify-center items-center h-4/5 bg-teal-50'>
@@ -45,10 +43,6 @@ const TestBooking = () => {
                 
 
                 <input className="border-b-2 border-gray-400 w-4/5 p-2 mb-4 focus:outline-none focus:border-green-700" required type="text" placeholder="Test For e.g Malaria" name='disease' onChange={handleFormChange}/>
-
-                <input className="border-b-2 border-gray-400 w-4/5 p-2 mb-4 focus:outline-none focus:border-green-700" required type="date" placeholder="Date for Test" name='date_for_test' onChange={handleFormChange}/>
-
-                <input className="border-b-2 border-gray-400 w-4/5 p-2 mb-4 focus:outline-none focus:border-green-700" required type="time" placeholder="Time for Test" name='time_for_test' onChange={handleFormChange}/>
 
                 <input className="border-b-2 border-gray-400 w-4/5 p-2 mb-4 focus:outline-none focus:border-green-700" required type="text" placeholder="Email Address" name='user_email' onChange={handleFormChange}/>
 

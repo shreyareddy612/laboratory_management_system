@@ -71,19 +71,7 @@ import Staff from './pages/Staff';
             element: <LabReport/>
         },
         {
-            path: "/admin",
-            element: <Admin/>
-        },
-        {
-          path: "/register-staff",
-          element: <StaffRegister/>
-        },
-        {
-          path: "/login-staff",
-          element: <StaffLogin/>
-        },
-        {
-          path: "/staff",
+          path: "/staff/:id",
           element: <Staff/>
         }
       ]

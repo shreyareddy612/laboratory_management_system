@@ -13,7 +13,6 @@ const hashPassword = (password, rounds) => {
 module.exports.registerUser = async (req, res) => {
     try {
         const hashed = hashPassword(req.body.password, 10);
-        console.log(hashed);
         const newStudent = await Users.create({
             full_name: req.body.full_name,
             email: req.body.email,
@@ -47,17 +46,17 @@ module.exports.loginUser = async (req, res) => {
       return res.status(401).json({ err: 'Wrong email or password' });
     }
 
+    // Generate a token with the user's ID and email
+    // const token = jwt.sign({ id: user._id, email: user.email }, 'labMS');
+
+    // Save the token in a cookie
+    // res.cookie('token', token, { httpOnly: true });
+    
     res.status(200).json({
       message: "Login Successful",
       user,
     })
-    // If the email and password match, generate a JWT
-    const token = jwt.sign({ _id: staff._id }, process.env.JWT_SECRET);
 
-    // Save the JWT in a cookie and return a success message
-    res.cookie('jwt', token, { httpOnly: true });
-    res.json({ message: 'Logged in successfully' });
-    
   } catch (error) {
     console.error(error);
     res.status(500).json({ err: 'Server error' });
@@ -79,21 +78,20 @@ module.exports.getUsers = async (req, res) => {
         const users = await Users.find({});
         res.send({ users });
     } catch (err) {
-        res.status(400).send({error: err});
+        res.status(400).send({err: err});
     }
 };
 
 // get user by id
-router.get('/:id', async (req, res) => {
-    try {
-        const user = await Users.findById(req.params.id);
-        res.send({ user });
-    } catch (error) {
-        res.status(404).send({ message: `User ${id} is not found` });
-    }
-});
-
-
+module.exports.getUserById = async (req, res) => {
+  console.log(req.params.id);
+  try {
+    const user = await Users.findById(req.params.id);
+    res.send({ user });
+  } catch (error) {
+    res.status(404).send({ message: `User is not found` });
+  }
+};
 
 // // @route PUT /api/users/:id
 // // @desc update the user

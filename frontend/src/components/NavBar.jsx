@@ -14,7 +14,6 @@ const NavBar = () => {
                         <div className="ml-4 py-2 px-2 rounded hover:bg-green-700"><Link to="/">Home</Link></div>
                         <div className="ml-4 py-2 px-2 rounded hover:bg-green-700"><Link to="/about-us">About Us</Link></div>
                         <div className="ml-4 py-2 px-2 rounded hover:bg-green-700"><Link to="/contact-us">Contact Us</Link></div>
-                        <div className="ml-4 py-2 px-2 rounded hover:bg-green-700"><Link to="/admin">Admin</Link></div>
                         <div className="ml-4 py-2 px-2 rounded hover:bg-green-700"><Link to="/register">Register</Link></div>
                     </div>
                     <div className="md:hidden">
@@ -27,7 +26,6 @@ const NavBar = () => {
                     <div className="block py-2 px-4 rounded hover:bg-green-700"><Link to="/">Home</Link></div>
                     <div className="block py-2 px-4 rounded hover:bg-green-700"><Link to="/about-us">About Us</Link></div>
                     <div className="block py-2 px-4 rounded hover:bg-green-700"><Link to="/contact-us">Contact Us</Link></div>
-                    <div className="ml-4 py-2 px-2 rounded hover:bg-green-700"><Link to="/admin">Admin</Link></div>
                     <div className="ml-4 py-2 px-2 rounded hover:bg-green-700"><Link to="/register">Register</Link></div>
                 </div>
             </header>

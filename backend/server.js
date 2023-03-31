@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const cookie = require('cookie-parser');
+const contact_us = require('./routes/route_contact_us.js');
 require('./config/db.config');
 
 const app = express();
@@ -18,10 +19,11 @@ app.use('/api/user/', require('./routes/route_user.js'));
 app.use('/api/labinfo/', require('./routes/route_labinfo.js'));
 app.use('/api/staff/', require('./routes/route_staff.js'));
 app.use('/api/results/', require('./routes/route_results.js'));
-app.use('/api/bktest/', require('./routes/route_book_test.js'));
-
+app.use('/api/bktest/', require('./routes/route_bk_test.js'));
+app.use('/api/contact-us/', contact_us);
 
 const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () => {
   console.log(`Server is running on ${PORT} `);
 });
