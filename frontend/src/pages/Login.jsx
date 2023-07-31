@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import http from '../http-common';
 
 
 const Login = () => {
@@ -22,24 +22,25 @@ const Login = () => {
         event.preventDefault();
 
         try {
-            const options = {
-                headers: {
-                    'Content-Type': 'application/json',
-                },                
-            };
-            const response = await axios.post('/api/user/loginUser', formData, options);
-            // get user id
-            const id = response.data.user._id;
+            const response = await http.post('/user/loginUser', formData);
+            const user = {
+                id: response.data.user._id,
+                email: response.data.user.email,
+                designation: response.data.user.designation,
+                name: response.data.user.full_name
+            }
 
-            const userResponse = await axios.get("/api/user/getUserById/" + id);
+            // const userResponse = await http.get("/user/getUserById/" + user.id);
 
-            const isPatient = userResponse.data.user.designation;
+            // const isPatient = userResponse.data.user.designation;
 
-            if (isPatient === "patient") {
+            if (user.designation === "patient") {
                 navigate("/test-booking");
             } else {
-                navigate(`/staff/${id}`);
+                navigate(`/staff/${user.id}`);
             }
+
+            localStorage.setItem("user", JSON.stringify(user));
         } catch (err) {
             // setError(err.response.data);
             console.log(err);

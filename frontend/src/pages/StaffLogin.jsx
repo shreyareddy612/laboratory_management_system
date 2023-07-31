@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import http from '../http-common';
 
 
 const StaffLogin = () => {
@@ -22,12 +22,7 @@ const StaffLogin = () => {
         event.preventDefault();
 
         try {
-            const options = {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            };
-            const response = await axios.post('/api/staff/loginStaff', formData, options);
+            const response = await http.post('/staff/loginStaff', formData);
             navigate("/results");
         } catch (error) {
             console.error(error);

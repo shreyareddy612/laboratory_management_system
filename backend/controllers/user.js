@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const Users = require("../models/user.js");
-const jwt = require('jsonwebtoken');
+
 
 // Hash password
 const hashPassword = (password, rounds) => {
@@ -32,6 +32,7 @@ module.exports.loginUser = async (req, res) => {
 
     // Find the user by email
     const user = await Users.findOne({ email });
+    console.log(user);
 
     // If the user does not exist, return an error
     if (!user) {
@@ -46,12 +47,6 @@ module.exports.loginUser = async (req, res) => {
       return res.status(401).json({ err: 'Wrong email or password' });
     }
 
-    // Generate a token with the user's ID and email
-    // const token = jwt.sign({ id: user._id, email: user.email }, 'labMS');
-
-    // Save the token in a cookie
-    // res.cookie('token', token, { httpOnly: true });
-    
     res.status(200).json({
       message: "Login Successful",
       user,
@@ -62,7 +57,6 @@ module.exports.loginUser = async (req, res) => {
     res.status(500).json({ err: 'Server error' });
   }
 };
-
 
 // logout
 module.exports.logout = async (req, res) => {
@@ -84,7 +78,6 @@ module.exports.getUsers = async (req, res) => {
 
 // get user by id
 module.exports.getUserById = async (req, res) => {
-  console.log(req.params.id);
   try {
     const user = await Users.findById(req.params.id);
     res.send({ user });
@@ -92,6 +85,19 @@ module.exports.getUserById = async (req, res) => {
     res.status(404).send({ message: `User is not found` });
   }
 };
+
+module.exports.getUserByEmail = async (req, res) => {
+  try {
+    const user = await Users.findOne({ email: req.params.email }); // Corrected line
+    if (user) {
+      res.send({ user });
+    } else {
+      res.status(404).send({ message: 'User is not found' });
+    }
+  } catch (error) {
+    res.status(500).send({ message: 'Internal server error' });
+  }
+}
 
 // // @route PUT /api/users/:id
 // // @desc update the user

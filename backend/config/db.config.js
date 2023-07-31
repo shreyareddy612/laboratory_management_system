@@ -10,11 +10,3 @@ mongoose.connect(uri, { useNewUrlParser: true,useUnifiedTopology:true  });
 mongoose.connection
   .once('open', () => console.log('Connected to the database!'))
   .on('error', err => console.log('Error with the database!', err));
-
-
-//   mongoose.connect(uri).then(
-//     () => {
-//         console.log("Success");
-//     },
-//     err => {console.log(err);}
-// );

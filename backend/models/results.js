@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 
 const results = new Schema({
     results: {type: String, required: true},
-    test_no: {type: Schema.Types.ObjectId, ref: "booktest"},
-    staff: {type: Schema.Types.ObjectId, ref: "staff"},
+    test_no: {type: Number, required: true},
+    staff: {type: String, required: true},
 });
 
 module.exports = mongoose.model('results', results);

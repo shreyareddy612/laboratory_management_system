@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import http from '../http-common';;
 
 const TestBooking = () => {
     const [formData, setFormData] = useState({
@@ -22,12 +22,7 @@ const TestBooking = () => {
         event.preventDefault();
 
         try {
-            const options = {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            };
-            const response = await axios.post('/api/bktest/createBkTest', formData, options);
+            const response = await http.post('/bktest/createBkTest', formData);
             navigate("/report");
         } catch (error) {
             console.error(error);

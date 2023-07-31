@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import http from '../http-common';
 
 
 const Register = () => {
@@ -25,12 +25,7 @@ const Register = () => {
         event.preventDefault();
 
         try {
-            const options = {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            };
-            const response = await axios.post('/api/user/registerUser', formData, options);
+            const response = await http.post('/user/registerUser', formData);
             navigate("/login");
         } catch (error) {
             console.error(error);

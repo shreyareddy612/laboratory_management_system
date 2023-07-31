@@ -3,6 +3,17 @@ import { Link } from "react-router-dom";
 
 
 const NavBar = () => {
+    const userData = localStorage.getItem('user')
+    const user = JSON.parse(userData);
+
+    const logout = () => {
+        try {
+            localStorage.clear();
+        } catch (error) {
+            console.error(error);
+        }        
+    }
+
     return (
         <div>
             <header className="bg-black text-white py-4">
@@ -14,7 +25,20 @@ const NavBar = () => {
                         <div className="ml-4 py-2 px-2 rounded hover:bg-green-700"><Link to="/">Home</Link></div>
                         <div className="ml-4 py-2 px-2 rounded hover:bg-green-700"><Link to="/about-us">About Us</Link></div>
                         <div className="ml-4 py-2 px-2 rounded hover:bg-green-700"><Link to="/contact-us">Contact Us</Link></div>
-                        <div className="ml-4 py-2 px-2 rounded hover:bg-green-700"><Link to="/register">Register</Link></div>
+                        {/* Conditionally render the Register or Logout link */}
+                        {user ? (
+                        <div className="ml-4 py-2 px-2 rounded hover:bg-green-700">
+                            <Link
+                                to="/"
+                                onClick={logout}>
+                                    Logout
+                            </Link>
+                        </div>
+                        ) : (
+                        <div className="ml-4 py-2 px-2 rounded hover:bg-green-700">
+                            <Link to="/register">Register</Link>
+                        </div>
+                        )}
                     </div>
                     <div className="md:hidden">
                         <button className="flex items-center px-3 py-2 border rounded text-green-700 border-gray-600 hover:text-white hover:border-white">
@@ -27,6 +51,7 @@ const NavBar = () => {
                     <div className="block py-2 px-4 rounded hover:bg-green-700"><Link to="/about-us">About Us</Link></div>
                     <div className="block py-2 px-4 rounded hover:bg-green-700"><Link to="/contact-us">Contact Us</Link></div>
                     <div className="ml-4 py-2 px-2 rounded hover:bg-green-700"><Link to="/register">Register</Link></div>
+                    <div className="ml-4 py-2 px-2 rounded hover:bg-green-700"><Link to="/">Logout</Link></div>
                 </div>
             </header>
         </div>
