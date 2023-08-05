@@ -15,9 +15,8 @@ import {
   import TestBooking from './pages/TestBooking';
   import Results from './pages/Results';
   import LabReport from './pages/LabReport';
-  import Admin from './pages/Admin';
-  import StaffRegister from './pages/StaffRegister';
-  import StaffLogin from './pages/StaffLogin';
+  import EditResults from './pages/EditResults';
+  import Patients from './pages/Patients';
 
 //   COMPONENTS
   import NavBar from './components/NavBar';
@@ -71,8 +70,16 @@ import Staff from './pages/Staff';
             element: <LabReport/>
         },
         {
+            path: "/edit-results",
+            element: <EditResults />
+        },
+        {
           path: "/staff/:id",
           element: <Staff/>
+        },
+        {
+          path: "/patients",
+          element: <Patients/>
         }
       ]
     }
