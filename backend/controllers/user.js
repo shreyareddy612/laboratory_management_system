@@ -76,6 +76,16 @@ module.exports.getUsers = async (req, res) => {
     }
 };
 
+// Get All Staffs
+module.exports.getStaffs = async (req, res) => {
+  try {
+    const staffs = await Users.find({ designation: "staff" });
+    res.send({ staffs });
+  } catch (error) {
+    res.status(400).send({ error: error.message });
+  }
+}
+
 // get user by id
 module.exports.getUserById = async (req, res) => {
   try {

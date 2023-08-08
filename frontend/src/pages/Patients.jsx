@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import { Link } from 'react-router-dom';
-import person from '../images/person.png';
-import personFemale from '../images/person-female.png';
+import { Link, useActionData } from 'react-router-dom';
 import http from '../http-common';
+
+import PatientCard from '../components/PatientCard';
 
 
 const Patients = () => {
     const [allPatients, setAllPatients] = useState([]);
+    const [filteredPatients, setFilteredPatients] = useState('Waiting');
     const [formData, setFormData] = useState({
         results: ""
     });
@@ -22,6 +23,22 @@ const Patients = () => {
         }))
     }
 
+    const handleFilterChange = (filter) => {
+        setFilteredPatients(filter);
+    }
+
+    const filterPatients = (patients) => {
+        if (filteredPatients === "Waiting") {
+            return patients;
+        } else if (filteredPatients === "Pending") {
+            return patients.filter((patient) => patient.results === "Pending...");
+        } else if (filteredPatients === "Negative") {
+            return patients.filter((patient) => patient.results === "Negative");
+        } else if (filteredPatients === "Positive") {
+            return patients.filter((patient) => patient.results === "Positive");
+        }
+    }
+
     /**
      * @description Gets data for all patients
      * @returns an array of all patients
@@ -29,8 +46,7 @@ const Patients = () => {
     const getAllPatients = async () => {
         try {
             const results = await http.get("/results/allPatients");
-            console.log(results.data);
-            setAllPatients(results.data);
+            setAllPatients(results.data.patients);
         } catch (error) {
             return { error: error };
         }
@@ -40,15 +56,18 @@ const Patients = () => {
         getAllPatients();
     }, []);
 
+    const filtered = filterPatients(allPatients);
+
     return (
         <div className='flex flex-col items-center bg-teal-50 mt-4'>
             <div className='flex flex-col items-center rounded-lg p-2 w-full'>
                 <h2 className="h2">Welcome to Patients Page</h2>
                 <hr />
                 <div className='flex flex-row'>
-                    <Link className='link-nav-btn' to='/results'>Waiting</Link>
-                    <Link className='link-nav-btn' to='/results'>Results</Link>
-                    <Link className='link-nav-btn' to='/report'>Report</Link>
+                    <Link className='link-nav-btn' to='' onClick={() => handleFilterChange('Waiting')}>Waiting</Link>
+                    <Link className='link-nav-btn' to='' onClick={() => handleFilterChange('Pending')}>Pending</Link>
+                    <Link className='link-nav-btn' to='' onClick={() => handleFilterChange('Positive')}>Positive</Link>
+                    <Link className='link-nav-btn' to='' onClick={() => handleFilterChange('Negative')}>Negative</Link>                    
                 </div>                
                 <hr />
                 {/* List of tested patients waiting for their */}
@@ -56,46 +75,12 @@ const Patients = () => {
                     {/* Search Box */}
                     <div>
                         <form action="" className='flex flex-row p-1'>
-                            <select class="block appearance-none w-2/3 h-10 bg-white border border-gray-200 text-gray-700 m-2 p-2 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" required name='resuts'>
-                                <option value="" disabled selected>Select Results</option>
-                                <option value="pending">Pending...</option>
-                                <option value="positive">Positive</option>
-                                <option value="negative">Negative</option>
-                            </select>
-
-                            <input type="button" value="Search" className='link-nav-btn h-10'/>
+                            <input className='block appearance-none w-full h-10 bg-white border border-gray-200 text-gray-700 m-2 p-2 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500' type="text" placeholder='Search by Name or Test No...' name='search'/>
                         </form>
                     </div>
-
+                    
                     {/* List of all or filtered tested patients */}
-                    <div className='flex flex-wrap justify-center'>                     
-                        
-                        {/* Patient Card */}
-                        {
-                            allPatients.length > 0 ? (
-                                allPatients.map((patient) => (                            
-                                    <div className='flex flex-col w-56 h-auto items-center border shadow-md m-1'>
-                                        <div>
-                                            <img src={person} alt="" srcset="" />
-                                        </div>
-                                        <span>John Doe</span>
-                                        <hr />
-                                        <span>Test: Malaria Test</span>
-                                        <span>Test No: {patient.test_no}</span>
-                                        <span>Results: {patient.results}</span>
-                                        <hr />
-                                        <div className='flex flex-row justify-between'>
-                                            <button type="button" className='link-nav-btn'>Update</button>
-                                            <button type="button" className='link-nav-btn'>Print</button>
-                                        </div>
-                                    </div>
-                                )
-                            )): (
-                                <p className='text-red'>No patients found</p>
-                            )
-                        }
-                        {/* End of card */}
-                    </div>
+                    <PatientCard parients={filtered}/>
                 </div>
             </div>            
         </div>

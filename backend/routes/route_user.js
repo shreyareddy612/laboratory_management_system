@@ -6,13 +6,16 @@ const {
     loginUser,
     getUsers,
     getUserById,
-    getUserByEmail } = require("../controllers/user.js");
+    getUserByEmail,
+    getStaffs
+ } = require("../controllers/user.js");
 
 router.post('/registerUser/', registerUser);
 router.post('/loginUser', loginUser);
 router.get('/getUsers', getUsers);
 router.get('/getUserById/:id', getUserById);
 router.get('/getUserByEmail/:email', getUserByEmail);
+router.get('/getStaffs', getStaffs);
 
 module.exports = router;
 

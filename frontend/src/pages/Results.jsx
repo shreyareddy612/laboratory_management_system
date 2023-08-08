@@ -95,7 +95,6 @@ const Results = () => {
 
         try {
             const response = await http.post(`/results/createResults/`, formData);
-            console.log("Saved");
         } catch (error) {
             console.error(error);
         }

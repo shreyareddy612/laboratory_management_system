@@ -1,9 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import person from '../images/person.png';
 
+import http from '../http-common.js';
+
 
 const Staff = () => {
+    const [staffs, setStaffs] = useState([]);
+
+    const getStaffs = async () => {
+        try {
+            const response = await http.get('/user/getStaffs');
+            setStaffs(response.data.staffs);
+            console.log(response.data.staffs);
+        } catch (error) {
+            console.log({ error: error });
+        }
+    }
+
+    useEffect(() => {
+        getStaffs();
+    }, []);
+
     return (
         <div className='flex flex-col items-center bg-teal-50 mt-4'>
             <div className='flex flex-col items-center rounded-lg p-2 w-full'>
@@ -13,6 +31,7 @@ const Staff = () => {
                     <Link className='link-nav-btn' to='/results'>Waiting</Link>
                     <Link className='link-nav-btn' to='/results'>Results</Link>
                     <Link className='link-nav-btn' to='/report'>Report</Link>
+                    <Link className='link-nav-btn' to='/patients'>Patients</Link>
                 </div>                
                 <hr />
                 {/* List of tested patients waiting for their */}
@@ -31,61 +50,35 @@ const Staff = () => {
                         </form>
                     </div>
 
-
-                    <h2 className='h2'>Patients</h2>
-
                     {/* List of all or filtered tested patients */}
-                    <div className='flex flex-wrap justify-center'>                     
-                        
+                    <div className='flex flex-wrap justify-center'>                       
                         {/* Patient Card */}
-                        <div className='flex flex-col w-56 h-auto items-center border shadow-md m-1'>
-                            <div>
-                                <img src={person} alt="" srcset="" />
-                            </div>
-                            <span>Jane Doe</span>
-                            <hr />
-                            <span>Test: Malaria Test</span>
-                            <span>Results: Pending...</span>
-                            <hr />
-                            <div className='flex flex-row justify-between'>
-                                <button type="button" className='link-nav-btn'>Update</button>
-                                <button type="button" className='link-nav-btn'>Print</button>
-                            </div>
-                        </div>
-                        {/* End of card */}
-
-                        {/* Patient Card */}
-                        <div className='flex flex-col w-56 h-auto items-center border shadow-md m-1'>
-                            <div>
-                                <img src={person} alt="" srcset="" />
-                            </div>
-                            <span>Jane Doe</span>
-                            <hr />
-                            <span>Test: Malaria Test</span>
-                            <span>Results: Pending...</span>
-                            <hr />
-                            <div className='flex flex-row justify-between'>
-                                <button type="button" className='link-nav-btn'>Update</button>
-                                <button type="button" className='link-nav-btn'>Print</button>
-                            </div>
-                        </div>
-                        {/* End of card */}
-
-                        {/* Patient Card */}
-                        <div className='flex flex-col w-56 h-auto items-center border shadow-md m-1'>
-                            <div>
-                                <img src={person} alt="" srcset="" />
-                            </div>
-                            <span>Jane Doe</span>
-                            <hr />
-                            <span>Test: Malaria Test</span>
-                            <span>Results: Pending...</span>
-                            <hr />
-                            <div className='flex flex-row justify-between'>
-                                <button type="button" className='link-nav-btn'>Update</button>
-                                <button type="button" className='link-nav-btn'>Print</button>
-                            </div>
-                        </div>
+                        {
+                            staffs.length > 0 ? (
+                                staffs.map((staff) => (
+                                    <div className='flex flex-col w-56 h-auto items-center border shadow-md m-1 p-1' key={staff._id}>
+                                        <div className='flex rounded-full border p-1'>
+                                            <img src={person} alt="" srcset="" />
+                                        </div>
+                                        <Link to="/staff">
+                                            <span className='underline'>
+                                                {staff.full_name}
+                                            </span>
+                                        </Link>                                        
+                                        <hr />
+                                        <span>{staff.designation}</span>
+                                        <span>{staff.email}</span>
+                                        <hr />
+                                        <div className='flex flex-row justify-between'>
+                                            <button type="button" className='link-nav-btn'>Update</button>
+                                            <button type="button" className='link-nav-btn'>Print</button>
+                                        </div>
+                                    </div>
+                                ))           
+                            ) : (
+                                <p>No Staffs</p>
+                            )
+                        }                        
                         {/* End of card */}
                     </div>
                 </div>
