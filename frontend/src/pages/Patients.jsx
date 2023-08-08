@@ -23,10 +23,19 @@ const Patients = () => {
         }))
     }
 
+    /**
+     * @description Sets filter array to provided filter i.e Waiting, Pending, Negative or Positive
+     * @param {*} filter filter parameter
+     */
     const handleFilterChange = (filter) => {
         setFilteredPatients(filter);
     }
 
+    /**
+     * @description Filters patients as per the given filter in handleFilterChange
+     * @param {*} patients Array of filtered patients
+     * @returns filtered patients
+     */
     const filterPatients = (patients) => {
         if (filteredPatients === "Waiting") {
             return patients;
