@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import person from '../images/person.png';
-
 import http from '../http-common.js';
 
 
 const Staff = () => {
     const [staffs, setStaffs] = useState([]);
+    const [searchQuerry, setSearchQuerry] = useState("");
 
     const getStaffs = async () => {
         try {
@@ -18,6 +18,24 @@ const Staff = () => {
         }
     }
 
+    const filteredStaffs = staffs.filter((staff) => {
+        if (searchQuerry === "") {
+            return true;
+        }
+        
+        const lowerCaseSearch = searchQuerry.toLowerCase();
+        
+        if (staff.full_name.toLowerCase().includes(lowerCaseSearch)) {
+            return true;
+        }
+        
+        if (staff.email.toLowerCase().includes(lowerCaseSearch)) {
+            return true;
+        }
+        
+        return false;
+    });
+
     useEffect(() => {
         getStaffs();
     }, []);
@@ -28,10 +46,7 @@ const Staff = () => {
                 <h2 className="h2">Welcome to Staff Page</h2>
                 <hr />
                 <div className='flex flex-row'>
-                    <Link className='link-nav-btn' to='/results'>Waiting</Link>
-                    <Link className='link-nav-btn' to='/results'>Results</Link>
-                    <Link className='link-nav-btn' to='/report'>Report</Link>
-                    <Link className='link-nav-btn' to='/patients'>Patients</Link>
+                    <Link className='link-nav-btn-underline' to='/patients'>Patients</Link>
                 </div>                
                 <hr />
                 {/* List of tested patients waiting for their */}
@@ -39,14 +54,20 @@ const Staff = () => {
                     {/* Search Box */}
                     <div>
                         <form action="" className='flex flex-row p-1'>
-                            <select class="block appearance-none w-2/3 h-10 bg-white border border-gray-200 text-gray-700 m-2 p-2 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" required name='resuts'>
-                                <option value="" disabled selected>Select Results</option>
-                                <option value="pending">Pending...</option>
-                                <option value="positive">Positive</option>
-                                <option value="negative">Negative</option>
+                            <select class="block appearance-none w-2/3 h-10 bg-white border border-gray-200 text-gray-700 m-2 p-2 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" required name='resuts'
+                            onChange={(e) => setSearchQuerry(e.target.value)}
+                            >
+                                <option value="" disabled selected>Select Filter</option>
+                                <option value="full_name">Full Name</option>
+                                <option value="email">Email</option>
                             </select>
 
-                            <input type="button" value="Search" className='link-nav-btn h-10'/>
+                            <input 
+                                type="text"
+                                className='block appearance-none w-full h-10 bg-white border border-gray-200 text-gray-700 m-2 p-2 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+                                onChange={(e) => setSearchQuerry(e.target.value)}
+                                placeholder='Full Name or Email...'
+                                />
                         </form>
                     </div>
 
@@ -54,9 +75,9 @@ const Staff = () => {
                     <div className='flex flex-wrap justify-center'>                       
                         {/* Patient Card */}
                         {
-                            staffs.length > 0 ? (
-                                staffs.map((staff) => (
-                                    <div className='flex flex-col w-56 h-auto items-center border shadow-md m-1 p-1' key={staff._id}>
+                            filteredStaffs.length > 0 ? (
+                                filteredStaffs.map((staff) => (
+                                    <div className='flex flex-col w-56 h-auto items-center border rounded-sm shadow-md m-1 p-1' key={staff._id}>
                                         <div className='flex rounded-full border p-1'>
                                             <img src={person} alt="" srcset="" />
                                         </div>
@@ -68,13 +89,8 @@ const Staff = () => {
                                         <hr />
                                         <span>{staff.designation}</span>
                                         <span>{staff.email}</span>
-                                        <hr />
-                                        <div className='flex flex-row justify-between'>
-                                            <button type="button" className='link-nav-btn'>Update</button>
-                                            <button type="button" className='link-nav-btn'>Print</button>
-                                        </div>
                                     </div>
-                                ))           
+                                ))
                             ) : (
                                 <p>No Staffs</p>
                             )

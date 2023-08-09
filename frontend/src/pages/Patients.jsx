@@ -8,20 +8,7 @@ import PatientCard from '../components/PatientCard';
 const Patients = () => {
     const [allPatients, setAllPatients] = useState([]);
     const [filteredPatients, setFilteredPatients] = useState('Waiting');
-    const [formData, setFormData] = useState({
-        results: ""
-    });
-
-    /**
-     * @description handles form input change
-     * @param {*} event to trigger a change event
-     */
-    const handleOnChange = (event) => {
-        setFormData((prev) => ({
-            ...prev,
-            [event.target.name]: event.target.value
-        }))
-    }
+    const [searchQuerry, setSearchQuerry] = useState("");
 
     /**
      * @description Sets filter array to provided filter i.e Waiting, Pending, Negative or Positive
@@ -67,6 +54,26 @@ const Patients = () => {
 
     const filtered = filterPatients(allPatients);
 
+    const searchPatient = filtered.filter((patient) => {
+        if (searchQuerry === "") {
+            return true;
+        }
+        
+        const lowerCaseSearch = searchQuerry.toLowerCase();
+        
+        if (patient.results.toLowerCase().includes(lowerCaseSearch)) {
+            return true;
+        }
+        
+        if (patient.test_no === parseInt(searchQuerry)) {
+            return true;
+        }
+        
+        return false;
+    });
+
+    console.log(filtered);
+
     return (
         <div className='flex flex-col items-center bg-teal-50 mt-4'>
             <div className='flex flex-col items-center rounded-lg p-2 w-full'>
@@ -84,12 +91,27 @@ const Patients = () => {
                     {/* Search Box */}
                     <div>
                         <form action="" className='flex flex-row p-1'>
-                            <input className='block appearance-none w-full h-10 bg-white border border-gray-200 text-gray-700 m-2 p-2 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500' type="text" placeholder='Search by Name or Test No...' name='search'/>
+                            <select class="block appearance-none w-2/3 h-10 bg-white border border-gray-200 text-gray-700 m-2 p-2 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" required 
+                            onChange={(e) => setSearchQuerry(e.target.value)}
+                            >
+                                <option value="" disabled selected>Select Filter</option>
+                                <option value="full_name">Full Name</option>
+                                <option value="test_no">Test No</option>
+                                <option value="results">Results</option>
+                                <option value="disease">Disease</option>
+                            </select>
+
+                            <input 
+                                type="text"
+                                className='block appearance-none w-full h-10 bg-white border border-gray-200 text-gray-700 m-2 p-2 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+                                onChange={(e) => setSearchQuerry(e.target.value)}
+                                placeholder='Full Name or Email...'
+                                />
                         </form>
                     </div>
                     
                     {/* List of all or filtered tested patients */}
-                    <PatientCard parients={filtered}/>
+                    <PatientCard parients={searchPatient}/>
                 </div>
             </div>            
         </div>
