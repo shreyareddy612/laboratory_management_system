@@ -19,9 +19,9 @@ import {
   import Patients from './pages/Patients';
 
 //   COMPONENTS
-  import NavBar from './components/NavBar';
+import NavBar from './components/NavBar';
 import Staff from './pages/Staff';
-import Profile from './components/Profile';
+import Profile from './pages/Profile';
 
   
   const Layout = () => {

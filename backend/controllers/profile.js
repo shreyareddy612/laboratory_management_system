@@ -1,9 +1,9 @@
 const express = require('express');
 const Profile = require("../models/profile");
-const { model } = require('mongoose');
 
 module.exports.createProfile = async (req, res) => {
     try {
+        const userId = req.params.user_id;
         const newProfile = await Profile.create({
             description: req.body.description,
             sex: req.body.sex,
@@ -16,16 +16,16 @@ module.exports.createProfile = async (req, res) => {
             next_of_kin: req.body.next_of_kin,
             next_of_kin_rel: req.body.next_of_kin_rel,
             next_of_kin_contact: req.body.next_of_kin_contact,
-            user_id: req.body.user
+            user_id: userId
         });
     } catch (error) {
         res.status(400).send({ error: error });   
     }
 }
 
-model.exports.getProfileById = async (req, res) => {
+module.exports.getProfileById = async (req, res) => {
     try {
-        const userId = req.params;
+        const userId = req.params.user_id;
 
         const userProfile = await Profile.findOne({ user_id: userId });
 
@@ -37,7 +37,7 @@ model.exports.getProfileById = async (req, res) => {
 
 module.exports.updateProfile = async (req, res) => {
     try {
-        const userId = req.params.userId; // Assuming you're passing the userId as a parameter
+        const userId = req.params.user_id; // Assuming you're passing the userId as a parameter
 
         const updatedProfile = await Profile.findOneAndUpdate(
             { user_id: userId },

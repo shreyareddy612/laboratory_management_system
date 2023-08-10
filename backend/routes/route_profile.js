@@ -3,9 +3,9 @@ const profileRouter = express.Router();
 
 const { createProfile, getProfileById, updateProfile } = require("../controllers/profile.js");
 
-profileRouter.post('/createProfile', createProfile);
-profileRouter.get('/getProfileById/:id', getProfileById);
-profileRouter.put('/updateProfile/:id', updateProfile);
+profileRouter.post('/createProfile/:user_id', createProfile);
+profileRouter.get('/getProfileById/:user_id', getProfileById);
+profileRouter.put('/updateProfile/:user_id', updateProfile);
 
 
-export default profileRouter;
+module.exports = profileRouter;
