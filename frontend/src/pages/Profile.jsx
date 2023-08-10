@@ -31,22 +31,22 @@ const Profile = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
         }));
     }
 
-    const handleSubmit = async () => {
-        if (Object.keys(profileData).length === 0) {
-            try {
-                const profile = await http.post(`/profile/createProfile/${user.id}`, formData);
-                console.log("Saved");
-                navigate("/profile/" + user.id)
-            } catch (error) {
-                console.log(error);
-            }
-        } else {
-            try {
-                const profile = await http.put(`/profile/updateProfile/${user.id}`, formData);
-                navigate("/profile/" + user.id)
-            } catch (error) {
-                console.log(error);
-            }
+    const handleSave = async (event) => {
+        try {
+            const profile = await http.post(`/profile/createProfile/${user.id}`, formData);
+            console.log("Saved");
+            navigate("/profile/" + user.id)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const handleUpdate = async (event) => {
+        try {
+            const profile = await http.put(`/profile/updateProfile/${user.id}`, formData);
+            navigate("/profile/" + user.id)
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -99,6 +99,8 @@ const Profile = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
 
     const checkStaff = isStaff(user);
     const loggedIn = isLoggedIn(user);
+
+    const showEditForm = profileData === null;
 
     return (
         <section className='flex flex-col min-h-full bg-teal-50'>
@@ -198,7 +200,119 @@ const Profile = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
                     
                     {
                         (
-                            Object.keys(profileData).length > 0 ? (
+                            showEditForm ? (
+                                <form className="flex flex-col">
+                                    {/* Edit Personal Info */}
+                                    <section className="flex flex-col p-2 sm:flex-row">
+                                        <div className="w-full border rounded-md p-1 m-1 sm:w-1/2">
+                                            <h2 className="h2 border-b-2 mb-1"> Edit Personal Data </h2>
+                                            <div className="label-row">
+                                                <textarea className="p-1" type="text" name="description" placeholder="Description..." cols={100} rows={5} onChange={handleFormChange}></textarea>
+                                            </div>
+                                            <div className="label-row">                            
+                                                <span className="flex font-bold">
+                                                    Sex:
+                                                </span>
+                                                <select name="sex" onChange={handleFormChange}>
+                                                    <option value="" disabled>Choose Sex</option>
+                                                    <option value="Male">Male</option>
+                                                    <option value="Female">Female</option>
+                                                    <option value="Other">Other</option>
+                                                </select>
+                                            </div>
+                                            <div className="label-row">                            
+                                                <span className="flex font-bold">
+                                                    Disability:
+                                                </span>
+                                                <select name="disabled" onChange={handleFormChange}>
+                                                    <option value="" disabled>Choose Disability</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                            </div>
+                                            <div className="label-row">                            
+                                                <span className="flex font-bold">
+                                                    Marital Status:
+                                                </span>
+                                                <select name="marital_status" onChange={handleFormChange}>
+                                                    <option value="" disabled>Marital Status</option>
+                                                    <option value="Married">Married</option>
+                                                    <option value="Single">Single</option>
+                                                    <option value="Separated">Separated</option>
+                                                    <option value="Divorced">Divorced</option>
+                                                </select>
+                                            </div>
+                                            <div className="label-row">                            
+                                                <span className="flex font-bold">
+                                                    Number of Children:
+                                                </span>
+                                                <input className="w-7 p-1" type="text" name="children" onChange={handleFormChange}/>
+                                            </div>
+                                            <div className="label-row">                            
+                                                <span className="flex font-bold">
+                                                    Blood Group:
+                                                </span>
+                                                <select name="blood_group" onChange={handleFormChange}>
+                                                    <option value="" disabled>Blood Group</option>
+                                                    <option value="A">A</option>
+                                                    <option value="AB">AB</option>
+                                                    <option value="B">B</option>
+                                                    <option value="O">O</option>
+                                                    <option value="I don't Know">I don't Know</option>
+                                                </select>
+                                            </div>
+                                            <div className="label-row">                            
+                                                <span className="flex font-bold">
+                                                    Work At: 
+                                                </span>
+                                                <input className="p-1" type="text" placeholder="e.g Google" name="work_at" onChange={handleFormChange}/>
+                                            </div>
+                                            <div className="label-row">                            
+                                                <span className="flex font-bold">
+                                                    Profession:
+                                                </span>
+                                                <input className="p-1" type="text" placeholder="e.g Software Engineer" name="work" onChange={handleFormChange}/>
+                                            </div>
+                                        </div>
+                                        {/* Next of Kin */}
+                                        <div className="w-full border rounded-md p-1 m-1 sm:w-1/2">
+                                            <h2 className="h2 border-b-2 mb-1"> Edit Next of Kin</h2>
+                                            <div className="label-row">                            
+                                                <span className="flex font-bold">
+                                                    Name:
+                                                </span>
+                                                <input className="p-1" type="text" placeholder="e.g Jane Doe" name="next_of_kin" onChange={handleFormChange}/>
+                                            </div>
+                                            <div className="label-row">                            
+                                                <span className="flex font-bold">
+                                                    Relationship:
+                                                </span>
+                                                <select name="next_of_kin_rel" onChange={handleFormChange}>
+                                                    <option value="" disabled>Relationship</option>
+                                                    <option value="Spouse">Spouse</option>
+                                                    <option value="Sibling">Sibling</option>
+                                                    <option value="Relative">Relative</option>
+                                                    <option value="Friend">Friend</option>
+                                                </select>
+                                            </div>
+                                            <div className="label-row">                           
+                                                <span className="flex font-bold">
+                                                    Contact:
+                                                </span>
+                                                <input className="p-1" type="text" placeholder="e.g +254 7xxxxxxxx" name="next_of_kin_contact" onChange={handleFormChange}/>
+                                            </div>                                            
+                                        </div>
+                                    </section>
+                                    <div className="label-row justify-end"> 
+                                        <input
+                                            className="link-nav-btn"
+                                            type="submit"
+                                            value={profileData ? "Update" : "Save"} // Change button text based on profileData
+                                            onClick={!profileData ? handleSave: handleUpdate}
+                                        />
+                                    </div>
+                                </form>  
+                            ) : (
                                 <div className="border rounded-lg p-2">
                                     <div className="flex flex-col p-1 m-1">                            
                                         <span className="flex border-b-2 font-bold">
@@ -261,113 +375,6 @@ const Profile = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
                                         </div>
                                     </section>          
                                 </div>
-                            ) : (
-                                <form className="flex flex-col">
-                                    {/* Edit Personal Info */}
-                                    <section className="flex flex-col p-2 sm:flex-row">
-                                        <div className="w-full border rounded-md p-1 m-1 sm:w-1/2">
-                                            <h2 className="h2 border-b-2 mb-1"> Edit Personal Data </h2>
-                                            <div className="label-row">
-                                                <textarea className="w-7 p-1" type="text" name="description" rows={3} cols={10} onChange={handleFormChange}>Description...</textarea>
-                                            </div>
-                                            <div className="label-row">                            
-                                                <span className="flex font-bold">
-                                                    Sex:
-                                                </span>
-                                                <select name="sex" onChange={handleFormChange}>
-                                                    <option value="" disabled selected>Choose Sex</option>
-                                                    <option value="Male">Male</option>
-                                                    <option value="Female">Female</option>
-                                                    <option value="Other">Other</option>
-                                                </select>
-                                            </div>
-                                            <div className="label-row">                            
-                                                <span className="flex font-bold">
-                                                    Disability:
-                                                </span>
-                                                <select name="disabled" onChange={handleFormChange}>
-                                                    <option value="" disabled selected>Choose Disability</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                </select>
-                                            </div>
-                                            <div className="label-row">                            
-                                                <span className="flex font-bold">
-                                                    Marital Status:
-                                                </span>
-                                                <select name="marital_status" onChange={handleFormChange}>
-                                                    <option value="" disabled selected>Marital Status</option>
-                                                    <option value="Married">Married</option>
-                                                    <option value="Single">Single</option>
-                                                    <option value="Separated">Separated</option>
-                                                    <option value="Divorced">Divorced</option>
-                                                </select>
-                                            </div>
-                                            <div className="label-row">                            
-                                                <span className="flex font-bold">
-                                                    Number of Children:
-                                                </span>
-                                                <input className="w-7 p-1" type="text" name="children" onChange={handleFormChange}/>
-                                            </div>
-                                            <div className="label-row">                            
-                                                <span className="flex font-bold">
-                                                    Blood Group:
-                                                </span>
-                                                <select name="blood_group" onChange={handleFormChange}>
-                                                    <option value="" disabled selected>Blood Group</option>
-                                                    <option value="A">A</option>
-                                                    <option value="AB">AB</option>
-                                                    <option value="B">B</option>
-                                                    <option value="O">O</option>
-                                                    <option value="I don't Know">I don't Know</option>
-                                                </select>
-                                            </div>
-                                            <div className="label-row">                            
-                                                <span className="flex font-bold">
-                                                    Work At: 
-                                                </span>
-                                                <input className="p-1" type="text" placeholder="e.g Google" name="work_at" onChange={handleFormChange}/>
-                                            </div>
-                                            <div className="label-row">                            
-                                                <span className="flex font-bold">
-                                                    Profession:
-                                                </span>
-                                                <input className="p-1" type="text" placeholder="e.g Software Engineer" name="work" onChange={handleFormChange}/>
-                                            </div>
-                                        </div>
-                                        {/* Next of Kin */}
-                                        <div className="w-full border rounded-md p-1 m-1 sm:w-1/2">
-                                            <h2 className="h2 border-b-2 mb-1"> Edit Next of Kin</h2>
-                                            <div className="label-row">                            
-                                                <span className="flex font-bold">
-                                                    Name:
-                                                </span>
-                                                <input className="p-1" type="text" placeholder="e.g Jane Doe" name="next_of_kin" onChange={handleFormChange}/>
-                                            </div>
-                                            <div className="label-row">                            
-                                                <span className="flex font-bold">
-                                                    Relationship:
-                                                </span>
-                                                <select name="next_of_kin_rel" onChange={handleFormChange}>
-                                                    <option value="" disabled selected>Relationship</option>
-                                                    <option value="spouce">Spouce</option>
-                                                    <option value="sibling">Sibling</option>
-                                                    <option value="relative">Relative</option>
-                                                    <option value="friend">Friend</option>
-                                                </select>
-                                            </div>
-                                            <div className="label-row">                           
-                                                <span className="flex font-bold">
-                                                    Contact:
-                                                </span>
-                                                <input className="p-1" type="text" placeholder="e.g +254 7xxxxxxxx" name="next_of_kin_contact" onChange={handleFormChange}/>
-                                            </div>                                            
-                                        </div>
-                                    </section>
-                                    <div className="label-row justify-end"> 
-                                        <input className="link-nav-btn" type="submit" value="Save" onClick={handleSubmit} />
-                                    </div>
-                                </form>  
                             )
                         )                        
                     }
