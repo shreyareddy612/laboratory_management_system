@@ -22,9 +22,7 @@ const Profile = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
         next_of_kin_rel: "",
         next_of_kin_contact: ""
     });
-
     const navigate = useNavigate();
-
     const handleFormChange = (event) => {
         setFormData(prev => ({
             ...prev,
@@ -74,7 +72,6 @@ const Profile = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
      * @param {*} user user object
      * @returns true if exists or false if not exist
      */
-
     const isLoggedIn = (user) => {
         if (user) {
             return true
@@ -88,15 +85,15 @@ const Profile = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
     const getUserProfile = async () => {
         try {
             const profile = await http.get(`/profile/getProfileById/${user.id}`);
+            console.log(profile);
             setProfileData(profile.data.userProfile);
         } catch (error) {
             console.error(error);
         }
     }
-
     useEffect(() => {
         getUserProfile();
-    }, {})
+    }, [profileData])
 
     const logout = () => {localStorage.clear()};
 
@@ -219,11 +216,6 @@ const Profile = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
                                             </div>
                                             <div className="label-row">                            
                                                 <span className="flex font-bold">
-                                                    Medical Condition:
-                                                </span>{profileData.medical_history}
-                                            </div>
-                                            <div className="label-row">                            
-                                                <span className="flex font-bold">
                                                     Marital Status:
                                                 </span>{profileData.marital_status}
                                             </div>
@@ -254,7 +246,7 @@ const Profile = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
                                             <div className="label-row">                            
                                                 <span className="flex font-bold">
                                                     Name:
-                                                </span>{profileData.next_kin}
+                                                </span>{profileData.next_of_kin}
                                             </div>
                                             <div className="label-row">                            
                                                 <span className="flex font-bold">
@@ -275,15 +267,18 @@ const Profile = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
                                     <section className="flex flex-col p-2 sm:flex-row">
                                         <div className="w-full border rounded-md p-1 m-1 sm:w-1/2">
                                             <h2 className="h2 border-b-2 mb-1"> Edit Personal Data </h2>
+                                            <div className="label-row">
+                                                <textarea className="w-7 p-1" type="text" name="description" rows={3} cols={10} onChange={handleFormChange}>Description...</textarea>
+                                            </div>
                                             <div className="label-row">                            
                                                 <span className="flex font-bold">
                                                     Sex:
                                                 </span>
                                                 <select name="sex" onChange={handleFormChange}>
                                                     <option value="" disabled selected>Choose Sex</option>
-                                                    <option value="male">Male</option>
-                                                    <option value="female">Female</option>
-                                                    <option value="other">Other</option>
+                                                    <option value="Male">Male</option>
+                                                    <option value="Female">Female</option>
+                                                    <option value="Other">Other</option>
                                                 </select>
                                             </div>
                                             <div className="label-row">                            
@@ -292,8 +287,8 @@ const Profile = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
                                                 </span>
                                                 <select name="disabled" onChange={handleFormChange}>
                                                     <option value="" disabled selected>Choose Disability</option>
-                                                    <option value="yes">Yes</option>
-                                                    <option value="no">No</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
                                                 </select>
                                             </div>
                                             <div className="label-row">                            
@@ -302,10 +297,10 @@ const Profile = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
                                                 </span>
                                                 <select name="marital_status" onChange={handleFormChange}>
                                                     <option value="" disabled selected>Marital Status</option>
-                                                    <option value="married">Married</option>
-                                                    <option value="single">Single</option>
-                                                    <option value="separated">Separated</option>
-                                                    <option value="divorced">Divorced</option>
+                                                    <option value="Married">Married</option>
+                                                    <option value="Single">Single</option>
+                                                    <option value="Separated">Separated</option>
+                                                    <option value="Divorced">Divorced</option>
                                                 </select>
                                             </div>
                                             <div className="label-row">                            
@@ -324,6 +319,7 @@ const Profile = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
                                                     <option value="AB">AB</option>
                                                     <option value="B">B</option>
                                                     <option value="O">O</option>
+                                                    <option value="I don't Know">I don't Know</option>
                                                 </select>
                                             </div>
                                             <div className="label-row">                            
