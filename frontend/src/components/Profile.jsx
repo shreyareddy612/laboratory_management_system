@@ -4,21 +4,12 @@ import profile from "../images/person.png";
 import account from "../images/test-account.png"
 
 
-const Profile = () => {
-    const userData = JSON.parse(localStorage.getItem("user"));
+const Profile = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
     const [isProfileVisible, setIsProfileVisible] = useState(false);
 
     const showProfile = () => {
         setIsProfileVisible(!isProfileVisible);
     };
-
-    const user = {
-            "_id" : "64c2b1c1489a36a3ab1de20e",
-            "full_name" : "Charles Mbithi",
-            "email" : "mbithicharlse@gmail.com",
-            "designation" : "patient",
-            "phone" : "0792907708"
-        }
     
     const profileData = {
             id: "64c2b1c1489a36a3ab1de20e",
@@ -51,7 +42,7 @@ const Profile = () => {
 
     /**
      * @description Check if logged in
-     * @param {*} userData user object
+     * @param {*} user user object
      * @returns true if exists or false if not exist
      */
 
@@ -65,7 +56,7 @@ const Profile = () => {
     const logout = () => {localStorage.clear()};
 
     const checkStaff = isStaff(user);
-    const loggedIn = isLoggedIn(userData);
+    const loggedIn = isLoggedIn(user);
 
     return (
         <section className='flex flex-col min-h-full bg-teal-50'>
@@ -95,7 +86,7 @@ const Profile = () => {
                         <div className="flex row p-2">
                             <span className="flex font-bold pr-2">
                                 Name:
-                            </span>{user.full_name}
+                            </span>{user.name}
                         </div>
                         <div className="flex row p-2">
                             <span className="font-bold pr-2">
@@ -160,7 +151,7 @@ const Profile = () => {
                 <div className="flex flex-col p-2 w-full border shadow-lg m-1 sm:w-2/3">
                     {/* Welcome */}
                     <h2 className="h2 mb-1">
-                        Welcome Again {user.full_name}!
+                        Welcome Again {user.name}!
                     </h2>
                     
                     {
@@ -251,7 +242,7 @@ const Profile = () => {
                         <div className="flex row p-2">
                             <span className="flex font-bold pr-2">
                                 Name:
-                            </span>{user.full_name}
+                            </span>{user.name}
                         </div>
                         <div className="flex row p-2">
                             <span className="font-bold pr-2">

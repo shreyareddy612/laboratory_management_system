@@ -83,7 +83,7 @@ import Profile from './components/Profile';
           element: <Patients/>
         },
         {
-          path: "/profile",
+          path: "/profile/:id",
           element: <Profile/>
         },
       ]

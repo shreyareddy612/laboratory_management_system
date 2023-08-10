@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+
 import http from '../http-common';
 
 
@@ -27,18 +28,14 @@ const Login = () => {
                 id: response.data.user._id,
                 email: response.data.user.email,
                 designation: response.data.user.designation,
-                name: response.data.user.full_name
+                name: response.data.user.full_name,
+                phone: response.data.user.phone
             }
 
             // const userResponse = await http.get("/user/getUserById/" + user.id);
 
             // const isPatient = userResponse.data.user.designation;
-
-            if (user.designation === "patient") {
-                navigate("/test-booking");
-            } else {
-                navigate(`/staff/${user.id}`);
-            }
+            navigate(`/profile/${user.id}`);
 
             localStorage.setItem("user", JSON.stringify(user));
         } catch (err) {
