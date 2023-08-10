@@ -78,7 +78,7 @@ const Staff = () => {
                             filteredStaffs.length > 0 ? (
                                 filteredStaffs.map((staff) => (
                                     <div className='flex flex-col w-56 h-auto items-center border rounded-sm shadow-md m-1 p-1' key={staff._id}>
-                                        <div className='flex rounded-full border p-1'>
+                                        <div className='cirular-image'>
                                             <img src={person} alt="" srcset="" />
                                         </div>
                                         <Link to="/staff">

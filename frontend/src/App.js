@@ -21,6 +21,7 @@ import {
 //   COMPONENTS
   import NavBar from './components/NavBar';
 import Staff from './pages/Staff';
+import Profile from './components/Profile';
 
   
   const Layout = () => {
@@ -80,7 +81,11 @@ import Staff from './pages/Staff';
         {
           path: "/patients",
           element: <Patients/>
-        }
+        },
+        {
+          path: "/profile",
+          element: <Profile/>
+        },
       ]
     }
   ]);

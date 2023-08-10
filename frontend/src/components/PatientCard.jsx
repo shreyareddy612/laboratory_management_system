@@ -15,7 +15,7 @@ const PatientCard = ({ parients }) => {
                     parients.length > 0 ? (
                         parients.map((patient) => (                            
                             <div className='flex flex-col w-56 h-auto items-center border shadow-md m-1'>
-                                <div>
+                                <div className="cirular-image">
                                     <img src={person} alt="" srcset="" />
                                 </div>
                                 <span>John Doe</span>

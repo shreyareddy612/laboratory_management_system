@@ -8,7 +8,8 @@
     "start": "npm server.js",
     "server": "nodemon server.js",
     "client": "npm run start --prefix ../frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "tailwind": "npm run tailwind --prefix ../frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\" \"npm run tailwind\""
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,7 @@
   "keywords": [
     "LabMS"
   ],
+
   "author": "Charles Mbithi",
   "license": "ISC",
   "bugs": {
