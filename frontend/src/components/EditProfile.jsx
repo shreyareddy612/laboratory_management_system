@@ -21,11 +21,16 @@ const EditProfile = ({
               cols={100}
               rows={5}
               onChange={handleFormChange}
+              value={profileData != null ? profileData.description : ""}
             ></textarea>
           </div>
           <div className="label-row">
             <span className="flex font-bold">Sex:</span>
-            <select name="sex" onChange={handleFormChange}>
+            <select
+              name="sex"
+              onChange={handleFormChange}
+              value={profileData != null ? profileData.sex : ""}
+            >
               <option value="" disabled>
                 Choose Sex
               </option>
@@ -36,7 +41,11 @@ const EditProfile = ({
           </div>
           <div className="label-row">
             <span className="flex font-bold">Disability:</span>
-            <select name="disabled" onChange={handleFormChange}>
+            <select
+              name="disabled"
+              onChange={handleFormChange}
+              value={profileData != null ? profileData.disabled : ""}
+            >
               <option value="" disabled>
                 Choose Disability
               </option>
@@ -46,7 +55,11 @@ const EditProfile = ({
           </div>
           <div className="label-row">
             <span className="flex font-bold">Marital Status:</span>
-            <select name="marital_status" onChange={handleFormChange}>
+            <select
+              name="marital_status"
+              onChange={handleFormChange}
+              value={profileData != null ? profileData.marital_status : ""}
+            >
               <option value="" disabled>
                 Marital Status
               </option>
@@ -63,11 +76,16 @@ const EditProfile = ({
               type="text"
               name="children"
               onChange={handleFormChange}
+              value={profileData != null ? profileData.children : 0}
             />
           </div>
           <div className="label-row">
             <span className="flex font-bold">Blood Group:</span>
-            <select name="blood_group" onChange={handleFormChange}>
+            <select
+              name="blood_group"
+              onChange={handleFormChange}
+              value={profileData != null ? profileData.blood_group : ""}
+            >
               <option value="" disabled>
                 Blood Group
               </option>
@@ -86,6 +104,7 @@ const EditProfile = ({
               placeholder="e.g Google"
               name="work_at"
               onChange={handleFormChange}
+              value={profileData != null ? profileData.work_at : ""}
             />
           </div>
           <div className="label-row">
@@ -96,6 +115,7 @@ const EditProfile = ({
               placeholder="e.g Software Engineer"
               name="work"
               onChange={handleFormChange}
+              value={profileData != null ? profileData.work : ""}
             />
           </div>
         </div>
@@ -110,11 +130,16 @@ const EditProfile = ({
               placeholder="e.g Jane Doe"
               name="next_of_kin"
               onChange={handleFormChange}
+              value={profileData != null ? profileData.next_of_kin : ""}
             />
           </div>
           <div className="label-row">
             <span className="flex font-bold">Relationship:</span>
-            <select name="next_of_kin_rel" onChange={handleFormChange}>
+            <select
+              name="next_of_kin_rel"
+              onChange={handleFormChange}
+              value={profileData != null ? profileData.next_of_kin_rel : ""}
+            >
               <option value="" disabled>
                 Relationship
               </option>
@@ -132,6 +157,7 @@ const EditProfile = ({
               placeholder="e.g +254 7xxxxxxxx"
               name="next_of_kin_contact"
               onChange={handleFormChange}
+              value={profileData != null ? profileData.next_of_kin_contact : ""}
             />
           </div>
         </div>

@@ -10,6 +10,7 @@ import http from "../http-common";
 const Profile = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
   const [profileData, setProfileData] = useState({});
   const [isProfileVisible, setIsProfileVisible] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
   const [formData, setFormData] = useState({
     description: "",
     sex: "",
@@ -23,7 +24,9 @@ const Profile = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
     next_of_kin_rel: "",
     next_of_kin_contact: "",
   });
+
   const navigate = useNavigate();
+
   const handleFormChange = (event) => {
     setFormData((prev) => ({
       ...prev,
@@ -42,6 +45,14 @@ const Profile = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
       navigate("/profile/" + user.id);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const clickUpdateButton = (event) => {
+    if (showEditForm === false) {
+      setShowEditForm(true);
+    } else {
+      setShowEditForm(false);
     }
   };
 
@@ -92,7 +103,6 @@ const Profile = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
   const getUserProfile = async () => {
     try {
       const profile = await http.get(`/profile/getProfileById/${user.id}`);
-      console.log(profile);
       setProfileData(profile.data.userProfile);
     } catch (error) {
       console.error(error);
@@ -102,14 +112,14 @@ const Profile = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
     getUserProfile();
   }, [profileData]);
 
+  console.log(showEditForm);
+
   const logout = () => {
     localStorage.clear();
   };
 
   const checkStaff = isStaff(user);
   const loggedIn = isLoggedIn(user);
-
-  const showEditForm = profileData === null;
 
   return (
     <section className="flex flex-col min-h-full bg-teal-50">
@@ -147,7 +157,9 @@ const Profile = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
               {user.phone}
             </div>
             <div className="flex justify-center">
-              <Link className="link-nav-btn">Update</Link>
+              <Link className="link-nav-btn" onClick={clickUpdateButton}>
+                Update
+              </Link>
             </div>
           </div>
 
@@ -200,15 +212,15 @@ const Profile = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
           {/* Welcome */}
           <h2 className="h2 mb-1">Welcome Again {user.name}!</h2>
 
-          {showEditForm ? (
+          {profileData != null && showEditForm === false ? (
+            <DisplayProfile profileData={profileData} />
+          ) : (
             <EditProfile
               profileData={profileData}
               handleFormChange={handleFormChange}
               handleUpdate={handleUpdate}
               handleSave={handleSave}
             />
-          ) : (
-            <DisplayProfile profileData={profileData} />
           )}
         </div>
 
