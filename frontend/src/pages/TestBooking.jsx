@@ -2,19 +2,29 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import http from "../http-common";
 
-const TestBooking = () => {
+const TestBooking = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
   const [formData, setFormData] = useState({
     disease: "",
     user_email: "",
   });
   const [selectedOption, setSelectedOption] = useState("You");
+  const [email, setEmail] = useState("");
 
   const navigate = useNavigate();
+
+  const isYou = () => {
+    if (selectedOption === "You") {
+      return true;
+    }
+
+    return false;
+  };
 
   const handleFormChange = (event) => {
     setFormData((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
+      user_email: isYou ? user.email : email,
     }));
   };
 
@@ -72,7 +82,7 @@ const TestBooking = () => {
             type="text"
             name="choice"
             className="border-b-2 border-gray-400 w-4/5 p-2 mb-4 focus:outline-none focus:border-green-700"
-            placeholder="Full Name or Email..."
+            placeholder="Search by Email..."
           />
         )}
 
