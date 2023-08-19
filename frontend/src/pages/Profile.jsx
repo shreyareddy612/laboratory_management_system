@@ -25,6 +25,12 @@ const Profile = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
     next_of_kin_contact: "",
   });
 
+  const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    setDescription(formData.description);
+  }, [description]);
+
   const navigate = useNavigate();
 
   const handleFormChange = (event) => {
@@ -288,7 +294,7 @@ const Profile = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
               </div>
             ) : (
               <Link
-                to="/test-booking"
+                to={`/test-booking/${user.id}`}
                 className="link-nav-btn-underline-full-width"
               >
                 BookTest

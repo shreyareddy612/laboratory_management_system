@@ -21,14 +21,6 @@ const TestBooking = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
     }
   };
 
-  const isYou = () => {
-    if (selectedOption === "You") {
-      return true;
-    }
-
-    return false;
-  };
-
   const handleFormChange = async (event) => {
     const { name, value } = event.target;
 
@@ -54,6 +46,8 @@ const TestBooking = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
       }));
     }
   };
+
+  console.log(formData.user_email);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -86,7 +80,7 @@ const TestBooking = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
           Test Booking
         </h1>
 
-        <div className="flex-col p-1">
+        <div className="flex flex-row p-1 w-4/5 justify-center border-t-2">
           <span class="text-black font-bold pr-2">Book Test For:</span>
           <label>
             <input
@@ -117,12 +111,39 @@ const TestBooking = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
           <input
             type="text"
             name="user_email"
-            className="border-b-2 border-gray-400 w-4/5 p-2 mb-4 focus:outline-none focus:border-green-700"
+            className="border-b-2 border-gray-400 w-4/5 p-2 mb-4  focus:outline-none focus:border-green-700"
             placeholder="Search by Email..."
             onChange={handleFormChange}
           />
         )}
 
+        <div className="flex flex-row w-4/5 p-1 mb-1 items-center border-t-2">
+          <label htmlFor="testDate" className="font-bold w-1/3 mr-1">
+            Test Date
+          </label>
+          <input
+            className="border-b-2 border-gray-400 w-2/3 p-2 mb-4 focus:outline-none focus:border-green-700"
+            required
+            type="date"
+            placeholder="Test Date"
+            name="date"
+            onChange={handleFormChange}
+          />
+        </div>
+
+        <div className="flex flex-row w-4/5 p-1 mb-1 items-center border-t-2 border-b-2">
+          <label htmlFor="testTime" className="font-bold w-1/3 mr-1">
+            Test Time
+          </label>
+          <input
+            className="border-b-2 border-gray-400 w-2/3 p-2 mb-4 focus:outline-none focus:border-green-700"
+            required
+            type="time"
+            placeholder="Test Date"
+            name="date"
+            onChange={handleFormChange}
+          />
+        </div>
         <input
           className="border-b-2 border-gray-400 w-4/5 p-2 mb-4 focus:outline-none focus:border-green-700"
           required
