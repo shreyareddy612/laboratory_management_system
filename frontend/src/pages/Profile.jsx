@@ -170,7 +170,7 @@ const Profile = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
             {checkStaff ? (
               <div>
                 <Link
-                  to="/patients"
+                  to={`/patients/${user.id}`}
                   className="link-nav-btn-underline-full-width"
                 >
                   Patients
@@ -181,10 +181,16 @@ const Profile = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
                 >
                   Staffs
                 </Link>
+                <Link
+                  to={`/test-booking/${user.id}`}
+                  className="link-nav-btn-underline-full-width"
+                >
+                  BookTest
+                </Link>
               </div>
             ) : (
               <Link
-                to="/test-booking"
+                to={`/test-booking/${user.id}`}
                 className="link-nav-btn-underline-full-width"
               >
                 BookTest
@@ -260,12 +266,26 @@ const Profile = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
           {/* Navigate to other pages */}
           <div className="flex flex-col">
             {checkStaff ? (
-              <Link
-                to="/patients"
-                className="link-nav-btn-underline-full-width"
-              >
-                Patients
-              </Link>
+              <div>
+                <Link
+                  to={`/patients/${user.id}`}
+                  className="link-nav-btn-underline-full-width"
+                >
+                  Patients
+                </Link>
+                <Link
+                  to={`/staff/${user.id}`}
+                  className="link-nav-btn-underline-full-width"
+                >
+                  Staffs
+                </Link>
+                <Link
+                  to={`/test-booking/${user.id}`}
+                  className="link-nav-btn-underline-full-width"
+                >
+                  BookTest
+                </Link>
+              </div>
             ) : (
               <Link
                 to="/test-booking"

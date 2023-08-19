@@ -12,6 +12,15 @@ const TestBooking = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
 
   const navigate = useNavigate();
 
+  const getUserEmail = async (email) => {
+    try {
+      const userData = await http.get(`/user/getUserByEmail/${email}`);
+      setEmail(userData.data.user.email);
+    } catch (error) {
+      console.error({ errorMessage: error });
+    }
+  };
+
   const isYou = () => {
     if (selectedOption === "You") {
       return true;
@@ -20,27 +29,54 @@ const TestBooking = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
     return false;
   };
 
-  const handleFormChange = (event) => {
-    setFormData((prev) => ({
-      ...prev,
-      [event.target.name]: event.target.value,
-      user_email: isYou ? user.email : email,
-    }));
-  };
+  const handleFormChange = async (event) => {
+    const { name, value } = event.target;
 
-  const handleOptionsSelected = (event) => {
-    setSelectedOption(event.target.value);
+    if (name === "testFor") {
+      setSelectedOption(value);
+      if (value === "You") {
+        setFormData((prev) => ({
+          ...prev,
+          user_email: user.email,
+        }));
+      } else {
+        setFormData((prev) => ({
+          ...prev,
+          user_email: "",
+        }));
+      }
+    } else if (name === "user_email") {
+      setEmail(value);
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
+      if (selectedOption === "Other") {
+        // If the selected option is "Other", get the email from the API
+        await getUserEmail(email);
+        setFormData((prev) => ({
+          ...prev,
+          user_email: email,
+        }));
+      }
+
       const response = await http.post("/bktest/createBkTest", formData);
-      navigate("/report");
+      navigate(`/patients/${user.id}`);
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleOptionsSelected = (event) => {
+    setSelectedOption(event.target.value);
   };
 
   return (
@@ -80,9 +116,10 @@ const TestBooking = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
         {selectedOption === "Other" && (
           <input
             type="text"
-            name="choice"
+            name="user_email"
             className="border-b-2 border-gray-400 w-4/5 p-2 mb-4 focus:outline-none focus:border-green-700"
             placeholder="Search by Email..."
+            onChange={handleFormChange}
           />
         )}
 
@@ -92,15 +129,6 @@ const TestBooking = ({ user = JSON.parse(localStorage.getItem("user")) }) => {
           type="text"
           placeholder="Test For e.g Malaria"
           name="disease"
-          onChange={handleFormChange}
-        />
-
-        <input
-          className="border-b-2 border-gray-400 w-4/5 p-2 mb-4 focus:outline-none focus:border-green-700"
-          required
-          type="text"
-          placeholder="Email Address"
-          name="user_email"
           onChange={handleFormChange}
         />
 

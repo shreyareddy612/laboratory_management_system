@@ -54,7 +54,7 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "/test-booking",
+        path: "/test-booking/:id",
         element: <TestBooking />,
       },
       {
@@ -74,7 +74,7 @@ const router = createBrowserRouter([
         element: <Staff />,
       },
       {
-        path: "/patients",
+        path: "/patients/:id",
         element: <Patients />,
       },
       {
