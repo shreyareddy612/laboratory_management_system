@@ -3,7 +3,7 @@ const app = express();
 
 const mongoose = require("mongoose");
 
-const uri = "mongodb://127.0.0.1:27017/labMS"
+const uri = "mongodb+srv://shreya:jukareddy123@cluster0.he6riu6.mongodb.net/"
 mongoose.connect(uri).then(
     () => {console.log("Success");},
     err => {console.log(err);}

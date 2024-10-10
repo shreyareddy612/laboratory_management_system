@@ -23,7 +23,7 @@ app.use('/api/contact-us/', contact_us);
 app.use('/api/results/', require('./routes/results_route.js'));
 app.use('/api/profile', require('./routes/route_profile.js'));
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3002;
 
 app.listen(PORT, () => {
   console.log(`Server is running on ${PORT} `);
